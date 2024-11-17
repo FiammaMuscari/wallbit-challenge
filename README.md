@@ -64,6 +64,22 @@ A continuación, sigue estos pasos para clonar el repositorio e instalar las dep
 
 Ahora puedes abrir el navegador en [http://localhost:5173/](http://localhost:5173/) y ver el proyecto sin problema.
 
+### Correr el Servidor de la API
+
+Para correr el servidor de la API localmente, sigue estos pasos:
+
+1. Entra a la carpeta `src/server` dentro de tu proyecto desde la terminal.
+2. Corre el siguiente comando para iniciar el servidor:
+
+```bash
+node server.js
+```
+
+1. El archivo `.env.example` se incluye en el repositorio como ejemplo. Debes renombrarlo a `.env` y personalizar los valores con el puerto. En nuestro ejemplo lo tendremos en http://localhost:5000/
+2. Si deseas usar el servidor en producción (por ejemplo, en Vercel), debes agregar las variables de entorno en el panel de configuración de Vercel (en la sección de "Environment Variables").
+
+Ahora podrás ver cómo cambia en data/cartData.json el storage dinámicamente.
+
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
   <div>
     Redes
