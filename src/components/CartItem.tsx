@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Product {
   id: number;
@@ -20,14 +20,13 @@ const CartItem: React.FC<CartItemProps> = ({
   updateQuantity,
 }) => {
   const [inputValue, setInputValue] = useState(item.quantity);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     setInputValue(item.quantity);
   }, [item.quantity]);
 
   const totalPrice = item.price * inputValue;
-
-  const [previousValue, setPreviousValue] = useState(item.quantity);
 
   const limitTitleToWords = (title: string, wordLimit: number) => {
     const words = title.split(" ");
@@ -38,16 +37,16 @@ const CartItem: React.FC<CartItemProps> = ({
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = Number(e.target.value);
-    if (newQuantity > 0) {
-      setInputValue(newQuantity);
-      updateQuantity(item.id, newQuantity);
-    }
+    setInputValue(newQuantity);
   };
 
-  const handleBlur = () => {
-    if (inputValue === 0) {
-      setInputValue(previousValue);
-      setPreviousValue(inputValue);
+  const handleBlur = async () => {
+    if (inputValue !== item.quantity && inputValue > 0) {
+      setIsUpdating(true);
+      await updateQuantity(item.id, inputValue);
+      setIsUpdating(false);
+    } else if (inputValue <= 0) {
+      setInputValue(item.quantity);
     }
   };
 
@@ -58,8 +57,11 @@ const CartItem: React.FC<CartItemProps> = ({
         value={inputValue}
         onChange={handleQuantityChange}
         onBlur={handleBlur}
-        className="w-16 text-center text-white bg-transparent border-none"
-        min="0"
+        className={`w-16 text-center text-white bg-transparent border-none ${
+          isUpdating ? 'opacity-50' : ''
+        }`}
+        min="1"
+        disabled={isUpdating}
       />
       <img
         src={item.image}
@@ -67,10 +69,7 @@ const CartItem: React.FC<CartItemProps> = ({
         className="w-16 h-16 object-contain rounded-md"
         loading="lazy"
       />
-      <h3
-        className="font-semibold text-lg flex-1 whitespace-nowrap cursor-pointer"
-        onClick={() => alert("Edit quantity for " + item.title)}
-      >
+      <h3 className="font-semibold text-lg flex-1 whitespace-nowrap">
         {limitTitleToWords(item.title, 4)}
       </h3>
       <span className="text-sm text-gray-400 w-1/4 text-center">
@@ -81,7 +80,8 @@ const CartItem: React.FC<CartItemProps> = ({
       </span>
       <button
         onClick={() => removeItem(item.id)}
-        className="bg-[#e4a42e] hover:bg-[#c99431] text-white px-4 py-1 rounded-full w-2 pb-2 text-center text-sm ml-auto flex items-center justify-center"
+        disabled={isUpdating}
+        className="bg-[#e4a42e] hover:bg-[#c99431] text-white px-4 py-1 rounded-full w-2 pb-2 text-center text-sm ml-auto flex items-center justify-center disabled:opacity-50"
       >
         x
       </button>
