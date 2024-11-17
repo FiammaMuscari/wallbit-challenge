@@ -66,16 +66,20 @@ Ahora puedes abrir el navegador en [http://localhost:5173/](http://localhost:517
 
 ### Correr el Servidor de la API
 
-Para correr el servidor de la API localmente, sigue estos pasos:
-
-1. Entra a la carpeta `src/server` dentro de tu proyecto desde la terminal.
-2. Corre el siguiente comando para iniciar el servidor:
+Para correr el servidor de la API se usa concurrently por lo que corren tanto el client como el server con nodemon en el mismo comando `pnpm run dev`  podes confirmar en `http://localhost:5173/api/cart` el estado del json por el GET que presenta nuestra api
 
 ```bash
-node server.js
+  "scripts": {
+    "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
+    "dev:client": "vite",
+    "dev:server": "nodemon src/server/server.js",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
 ```
 
-1. El archivo `.env.example` se incluye en el repositorio como ejemplo. Debes renombrarlo a `.env` y personalizar los valores con el puerto. En nuestro ejemplo lo tendremos en http://localhost:5000/
+1. El archivo `.env.example` se incluye en el repositorio como ejemplo. Debes renombrarlo a `.env` y personalizar los valores. En nuestro ejemplo lo tendremos en http://localhost:5000/api para local o https://wallbit-challenge-vert.vercel.app/api para producción.
 2. Si deseas usar el servidor en producción (por ejemplo, en Vercel), debes agregar las variables de entorno en el panel de configuración de Vercel (en la sección de "Environment Variables").
 
 Ahora podrás ver cómo cambia en data/cartData.json el storage dinámicamente.

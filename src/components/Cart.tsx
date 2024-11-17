@@ -18,11 +18,11 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ cart, setCart, emptyCart }) => {
   const [createDate, setCreateDate] = useState<string>("");
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     const fetchCreateDate = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/cart");
+        const response = await fetch(`${apiUrl}/cart`);
         const data = await response.json();
         setCreateDate(data.createDate);
       } catch (error) {
@@ -32,11 +32,12 @@ const Cart: React.FC<CartProps> = ({ cart, setCart, emptyCart }) => {
     };
 
     fetchCreateDate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   const removeItem = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/cart/${id}`, {
+      const response = await fetch(`${apiUrl}/cart/${id}`, {
         method: "DELETE",
       });
 
@@ -55,7 +56,7 @@ const Cart: React.FC<CartProps> = ({ cart, setCart, emptyCart }) => {
 
   const updateQuantity = async (id: number, quantity: number) => {
     try {
-      const response = await fetch("http://localhost:5000/api/cart/update", {
+      const response = await fetch(`${apiUrl}/cart/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

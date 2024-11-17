@@ -20,11 +20,13 @@ function App() {
 
   useEffect(() => {
     fetchCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
   const fetchCart = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/cart");
+      const response = await fetch(`${apiUrl}/cart`);
       const data = await response.json();
       setCart(data.cart);
       console.log("data", data);
@@ -33,7 +35,6 @@ function App() {
       toast.error("Error al cargar el carrito");
     }
   };
-
   const addToCart = async (product: Product) => {
     if (product.quantity <= 0) {
       setErrorMessage("La cantidad debe ser mayor a cero.");
@@ -44,7 +45,7 @@ function App() {
     setErrorMessage(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/cart", {
+      const response = await fetch(`${apiUrl}/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +75,7 @@ function App() {
 
   const emptyCart = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/cart", {
+      const response = await fetch(`${apiUrl}/cart`, {
         method: "DELETE",
       });
 
