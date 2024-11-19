@@ -64,25 +64,29 @@ A continuación, sigue estos pasos para clonar el repositorio e instalar las dep
 
 Ahora puedes abrir el navegador en [http://localhost:5173/](http://localhost:5173/) y ver el proyecto sin problema.
 
-### Correr el Servidor de la API
+### Servidor de la API
 
-Para correr el servidor de la API se usa concurrently por lo que corren tanto el client como el server con nodemon en el mismo comando `pnpm run dev`  podes confirmar en `http://localhost:5173/api/cart` el estado del json por el GET que presenta nuestra api
+El servidor de nuestra api se encuentra alojado en https://github.com/FiammaMuscari/cart-api-server y deployado en Render https://cart-api-1.onrender.com/api/cart encontraras los detalles del servidor en ese repositorio y el GET del carrito con el .json del estado actual del objeto. Se deja de ejemplo la carpeta server en este repositorio para poder ver los controladores, la ruta y la estructura del servidor, para correrlo ingresar a `wallbit-challenge\src\server>` y correr `node server.js`
+se va a mostrar
+Server is running on http://localhost:5000
+ingresa a http://localhost:5000/api/cart y cambia la variable de entorno por http://localhost:5000/api todo esto lo podes ver en el dev.example recuerda que solo podes dejar una opción.
 
-```bash
-  "scripts": {
-    "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
-    "dev:client": "vite",
-    "dev:server": "nodemon src/server/server.js",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+1. El archivo `.env.example` se incluye en el repositorio como ejemplo. Debes renombrarlo a `.env` y personalizar los valores. En nuestro ejemplo lo tendremos en http://localhost:5000/api para local o https://cart-api-1.onrender.com/api para producción.
+
+2. En producción (por ejemplo, en Vercel), debes agregar las variables de entorno en el panel "Environment Variables"
+
+Podrás ver cómo cambia el storage dinámicamente en https://cart-api-1.onrender.com/api/cart con las peticiones desde nuestro client, recuerda que al generar tu propio servidor deberas reemplazar la ruta por la de tu proyecto en render por un tema de permisos de cors y cambiarlo en el servidor en
+
 ```
+server.js
 
-1. El archivo `.env.example` se incluye en el repositorio como ejemplo. Debes renombrarlo a `.env` y personalizar los valores. En nuestro ejemplo lo tendremos en http://localhost:5000/api para local o https://wallbit-challenge-vert.vercel.app/api para producción.
-2. Si deseas usar el servidor en producción (por ejemplo, en Vercel), debes agregar las variables de entorno en el panel de configuración de Vercel (en la sección de "Environment Variables").
-
-Ahora podrás ver cómo cambia en data/cartData.json el storage dinámicamente.
+app.use(
+  cors({
+    origin: [ "here"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    credentials: true,
+  }))
+```
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
   <div>
