@@ -177,7 +177,7 @@ function App() {
         <button
           onClick={handleAddToCartClick}
           disabled={isLoading}
-          className="px-4 py-2 bg-[#059dfb] text-gray-50 rounded transition-all duration-300 ease-in-out transform hover:bg-[#0391d1] hover:shadow-lg disabled:opacity-50"
+          className="px-4 py-2 bg-[#059dfb] text-gray-50 rounded transition-all duration-300 ease-in-out transform hover:bg-[#0391d1] hover:shadow-lg disabled:opacity-50 min-w-[120px] flex justify-center"
         >
           {isLoading ? "Agregando..." : "Agregar"}
         </button>

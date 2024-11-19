@@ -114,10 +114,17 @@ const Cart: React.FC<CartProps> = ({ cart, setCart, emptyCart }) => {
       </ul>
 
       {cart.length === 0 ? (
-        <h4 className="text-sm text-gray-500 m-auto w-[30em] bg-gray-500 bg-opacity-50 p-4 rounded-lg">
-          No hay productos en el carrito aún, prueba agregando alguno con su ID
-          y la cantidad que deseas ingresar.
-        </h4>
+        <section className=" m-auto w-[30em] p-4 flex flex-col gap-2 bg-gray-500 bg-opacity-50  rounded-lg">
+          <img
+            src="/cart.png"
+            alt="cart"
+            className="m-auto h-full  bg-[#1467aa36]  rounded-full"
+          />
+          <h4 className="text-sm text-gray-400 p-4">
+            No hay productos en el carrito aún, prueba agregando alguno con su
+            ID y la cantidad que deseas ingresar.
+          </h4>
+        </section>
       ) : (
         cart.map((item) => (
           <CartItem
@@ -131,10 +138,12 @@ const Cart: React.FC<CartProps> = ({ cart, setCart, emptyCart }) => {
 
       {cart.length > 0 && (
         <>
-          <section className="flex items-center justify-between mx-8">
-            <h3>Cantidad total de items: {totalQuantity}</h3>
-            <h2 className="font-bold">
-              Total Carrito: ${totalPrice.toFixed(2)}
+          <section className="flex items-center justify-between mx-8 p-4 rounded-lg bg-gradient-to-t from-[#096ea856]  to-[#059dfb3d] shadow-md border border-[#0391d1] text-white">
+            <h3 className="text-lg">
+              Cantidad total de items: <span>{totalQuantity}</span>
+            </h3>
+            <h2 className="text-xl font-bold">
+              Total Carrito: <span>${totalPrice.toFixed(2)}</span>
             </h2>
           </section>
 

@@ -21,7 +21,7 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState(item.quantity);
   const [isUpdating, setIsUpdating] = useState(false);
-
+  const [isImageLoading, setIsImageLoading] = useState(true);
   useEffect(() => {
     setInputValue(item.quantity);
   }, [item.quantity]);
@@ -50,32 +50,44 @@ const CartItem: React.FC<CartItemProps> = ({
     }
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
+
   return (
-    <div className="w-full flex gap-7 items-center mb-4 p-4 border border-[#0391d1] rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <div className="max-w-[40em] bg-gradient-to-b from-[#096ea823] to-[#0390d14b] grid grid-cols-6 gap-4 items-center mb-4 p-4 border border-[#0391d1] rounded-lg shadow-sm hover:shadow-md transition-shadow">
       <input
         type="number"
         value={inputValue}
         onChange={handleQuantityChange}
         onBlur={handleBlur}
-        className={`w-16 text-center text-white bg-transparent border-none ${
-          isUpdating ? 'opacity-50' : ''
+        className={`w-full text-center text-white  bg-transparent border-none ${
+          isUpdating ? "opacity-50" : ""
         }`}
         min="1"
         disabled={isUpdating}
       />
-      <img
-        src={item.image}
-        alt={item.title}
-        className="w-16 h-16 object-contain rounded-md"
-        loading="lazy"
-      />
-      <h3 className="font-semibold text-lg flex-1 whitespace-nowrap">
-        {limitTitleToWords(item.title, 4)}
-      </h3>
-      <span className="text-sm text-gray-400 w-1/4 text-center">
+      <div className="relative w-full h-full flex justify-center items-center">
+        {isImageLoading && (
+          <div className="absolute flex items-center justify-center">
+            <div className="relative w-8 h-8">
+              <div className="absolute border-4 border-t-transparent border-[#0391d1] rounded-full w-full h-full animate-spin"></div>
+            </div>
+          </div>
+        )}
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover rounded-xl mx-auto border-[3px] border-[#34aecc7e]"
+          loading="lazy"
+          onLoad={handleImageLoad}
+        />
+      </div>
+      <h3 className=" text-lg ">{limitTitleToWords(item.title, 4)}</h3>
+      <span className="text-sm text-gray-400 text-center">
         ${item.price.toFixed(2)}
       </span>
-      <span className="text-sm text-white w-1/4 text-center">
+      <span className="text-md text-white text-center font-semibold">
         ${totalPrice.toFixed(2)}
       </span>
       <button

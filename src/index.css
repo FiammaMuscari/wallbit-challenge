@@ -20,7 +20,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color: #ffffff;
-    background-color: #000000; 
+    background-color: #000000;
   }
 }
 
@@ -65,13 +65,19 @@ button {
   transition: border-color 0.25s;
 }
 
+input {
+  background-color: white;
+  color: #000000;
+}
+
+input:focus {
+  outline: none;
+  border-color: #004977;
+  box-shadow: 0 0 4px rgba(5, 157, 251, 1), 0 0 8px rgba(5, 157, 251, 0.6);
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-input:focus {
-  outline: none;
-  border-color: #004977;
-  box-shadow: 0 0 4px rgba(5, 157, 251, 1), 0 0 8px rgba(5, 157, 251, 0.6); 
 }
